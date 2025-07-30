@@ -9,32 +9,58 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 218 25% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 218 25% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 218 25% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 217 91% 22%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 217 100% 35%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 45 100% 85%;
+    --secondary-foreground: 217 91% 22%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 45 100% 68%;
+    --accent-foreground: 217 91% 22%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 91% 22%;
+    
+    /* Custom design tokens */
+    --navy-deep: 217 91% 15%;
+    --navy-primary: 217 91% 22%;
+    --navy-light: 217 91% 35%;
+    --gold-light: 45 100% 85%;
+    --gold-medium: 45 100% 68%;
+    --gold-dark: 45 100% 55%;
+    --earth-warm: 30 15% 92%;
+    --earth-medium: 30 10% 85%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--navy-primary)), hsl(var(--navy-light)));
+    --gradient-gold: linear-gradient(135deg, hsl(var(--gold-medium)), hsl(var(--gold-dark)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--navy-deep)) 0%, hsl(var(--navy-primary)) 50%, hsl(var(--navy-light)) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--earth-warm)));
+    
+    /* Shadows */
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--navy-primary) / 0.3);
+    --shadow-gold: 0 8px 25px -8px hsl(var(--gold-medium) / 0.4);
+    --shadow-soft: 0 4px 12px -4px hsl(var(--navy-primary) / 0.1);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
     --radius: 0.5rem;
 

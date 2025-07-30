@@ -1,12 +1,61 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Navigation from "@/components/Navigation";
+import Hero from "@/components/Hero";
+import About from "@/components/About";
+import Services from "@/components/Services";
+import Opportunities from "@/components/Opportunities";
+import Contact from "@/components/Contact";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen">
+      <Navigation />
+      <main>
+        <Hero />
+        <About />
+        <Services />
+        <Opportunities />
+        <Contact />
+      </main>
+      
+      {/* Footer */}
+      <footer className="bg-navy-deep text-white py-12">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="col-span-1 md:col-span-2">
+              <div className="text-2xl font-bold mb-4">
+                Qalbi<span className="text-gold-medium">.</span> Investments
+              </div>
+              <p className="text-gray-300 mb-4 max-w-md">
+                Your trusted partner for foreign investment opportunities in East Africa. 
+                Specialized in agro-processing, healthcare, and transport sectors.
+              </p>
+              <div className="text-sm text-gray-400">
+                © 2024 Qalbi Investments. All rights reserved.
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="font-bold mb-4">Services</h4>
+              <ul className="space-y-2 text-gray-300">
+                <li><a href="#" className="hover:text-gold-medium transition-colors">Investment Advisory</a></li>
+                <li><a href="#" className="hover:text-gold-medium transition-colors">Market Research</a></li>
+                <li><a href="#" className="hover:text-gold-medium transition-colors">Tax Incentives</a></li>
+                <li><a href="#" className="hover:text-gold-medium transition-colors">Legal Support</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-bold mb-4">Resources</h4>
+              <ul className="space-y-2 text-gray-300">
+                <li><a href="#" className="hover:text-gold-medium transition-colors">Investment Guide</a></li>
+                <li><a href="#" className="hover:text-gold-medium transition-colors">Market Reports</a></li>
+                <li><a href="#" className="hover:text-gold-medium transition-colors">Success Stories</a></li>
+                <li><a href="#" className="hover:text-gold-medium transition-colors">Blog</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
