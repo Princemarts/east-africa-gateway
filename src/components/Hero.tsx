@@ -4,7 +4,7 @@ import heroImage from "@/assets/hero-africa-investment.jpg";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
@@ -16,7 +16,7 @@ export default function Hero() {
       </div>
       
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 text-center text-white">
+      <div className="relative z-10 container mx-auto px-6 py-12 text-center text-white">
         <div className="max-w-4xl mx-auto">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-gold-medium/20 backdrop-blur-sm border border-gold-medium/30 rounded-full px-4 py-2 mb-6">
@@ -25,13 +25,13 @@ export default function Hero() {
           </div>
           
           {/* Main Heading */}
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
             Your Gateway to 
             <span className="bg-gradient-gold bg-clip-text text-transparent"> East Africa</span>
           </h1>
           
           {/* Subheading */}
-          <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl lg:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto leading-relaxed">
             Unlock investment opportunities in Uganda, Kenya, and Tanzania with expert guidance, 
             tax incentives, and comprehensive support from market entry to project completion.
           </p>
@@ -49,18 +49,18 @@ export default function Hero() {
           </div>
           
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button variant="hero" size="lg" className="min-w-[200px]">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+            <Button variant="hero" size="lg" className="w-full sm:w-auto min-w-[200px]">
               Explore Opportunities
               <ArrowRight className="w-5 h-5" />
             </Button>
-            <Button variant="outline" size="lg" className="min-w-[200px] text-white border-white/30 hover:bg-white hover:text-navy-primary">
+            <Button variant="outline" size="lg" className="w-full sm:w-auto min-w-[200px] text-white border-white/30 hover:bg-white hover:text-navy-primary">
               Book Consultation
             </Button>
           </div>
           
           {/* Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-16 pt-16 border-t border-white/20">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-12 pt-12 border-t border-white/20">
             <div className="text-center">
               <div className="text-3xl font-bold text-gold-medium mb-2">3</div>
               <div className="text-sm text-gray-300">Countries Covered</div>

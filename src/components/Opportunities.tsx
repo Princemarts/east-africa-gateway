@@ -83,7 +83,7 @@ export default function Opportunities() {
   };
 
   return (
-    <section id="opportunities" className="py-24 bg-earth-warm">
+    <section id="opportunities" className="py-24 bg-earth-warm scroll-mt-20">
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16">
@@ -100,7 +100,7 @@ export default function Opportunities() {
         </div>
 
         {/* Opportunities Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-16">
           {opportunities.map((opportunity) => (
             <Card key={opportunity.id} className="group hover:shadow-elegant transition-all duration-300 bg-white border-none">
               <CardHeader>
