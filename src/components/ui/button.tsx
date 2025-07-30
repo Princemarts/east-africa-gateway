@@ -21,6 +21,7 @@ const buttonVariants = cva(
         hero: "bg-gradient-gold text-navy-deep hover:shadow-gold transform hover:scale-105 transition-all duration-300 font-semibold",
         premium: "bg-gradient-primary text-white hover:bg-primary-glow transform hover:scale-105 transition-all duration-300 shadow-elegant",
         professional: "bg-navy-primary text-white hover:bg-navy-light border border-gold-medium/20 transition-all duration-300",
+        consultation: "bg-navy-primary text-white border border-navy-primary hover:bg-gold-medium hover:text-navy-deep hover:border-gold-medium transition-all duration-300",
       },
       size: {
         default: "h-10 px-4 py-2",

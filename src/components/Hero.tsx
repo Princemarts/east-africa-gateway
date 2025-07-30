@@ -54,7 +54,7 @@ export default function Hero() {
               Explore Opportunities
               <ArrowRight className="w-5 h-5" />
             </Button>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto min-w-[200px] text-white border-white/30 hover:bg-white hover:text-navy-primary">
+            <Button variant="consultation" size="lg" className="w-full sm:w-auto min-w-[200px]">
               Book Consultation
             </Button>
           </div>
