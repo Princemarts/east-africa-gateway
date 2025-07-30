@@ -110,8 +110,8 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="flex items-center space-x-3">
-            <Button variant="outline" size="sm" className="border-gold-medium/30 text-white hover:bg-gold-medium hover:text-navy-deep">
-              <Settings className="w-4 h-4 mr-2" />
+            <Button variant="outline" size="sm" className="border-gold-medium/30 text-gold-medium hover:bg-gold-medium hover:text-navy-deep">
+              <Settings className="w-4 h-4 mr-2 text-gold-medium" />
               Settings
             </Button>
           </div>
