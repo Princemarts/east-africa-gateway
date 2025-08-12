@@ -24,6 +24,8 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import * as XLSX from "xlsx";
+import jsPDF from "jspdf";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -31,7 +33,38 @@ const Dashboard = () => {
   const [realProjects, setRealProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const { toast } = useToast();
+const { toast } = useToast();
+
+  // Phase 1+2 additions
+  const [realTransactions, setRealTransactions] = useState<any[]>([]);
+
+  const mockTransactions = [
+    { id: 1, date: '2025-08-01', investor: 'John Smith', type: 'Deposit', amount: 250000, currency: 'USD', status: 'Approved' },
+    { id: 2, date: '2025-08-03', investor: 'Maria Garcia', type: 'Withdrawal', amount: 50000, currency: 'USD', status: 'Pending' },
+    { id: 3, date: '2025-08-07', investor: 'Ahmed Hassan', type: 'Investment', amount: 100000, currency: 'USD', status: 'Approved' },
+  ];
+
+  const exportToExcel = () => {
+    const wb = XLSX.utils.book_new();
+    const investorsSheet = XLSX.utils.json_to_sheet(realInvestors.length ? realInvestors : mockInvestors);
+    XLSX.utils.book_append_sheet(wb, investorsSheet, 'Investors');
+    const projectsSheet = XLSX.utils.json_to_sheet(realProjects.length ? realProjects : mockProjects);
+    XLSX.utils.book_append_sheet(wb, projectsSheet, 'Projects');
+    const transactionsSheet = XLSX.utils.json_to_sheet(realTransactions.length ? realTransactions : mockTransactions);
+    XLSX.utils.book_append_sheet(wb, transactionsSheet, 'Transactions');
+    XLSX.writeFile(wb, 'dashboard-report.xlsx');
+  };
+
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    doc.setFontSize(14);
+    doc.text('Dashboard Report', 14, 20);
+    doc.setFontSize(10);
+    doc.text(`Investors: ${realInvestors.length}`, 14, 30);
+    doc.text(`Projects: ${realProjects.length}`, 14, 36);
+    doc.text(`Transactions: ${realTransactions.length || mockTransactions.length}`, 14, 42);
+    doc.save('dashboard-report.pdf');
+  };
 
   useEffect(() => {
     // Check if user is authenticated
@@ -46,9 +79,10 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     try {
-      const [investorsResponse, projectsResponse] = await Promise.all([
+      const [investorsResponse, projectsResponse, transactionsResponse] = await Promise.all([
         supabase.from('investors').select('*').order('created_at', { ascending: false }),
-        supabase.from('projects').select('*').order('created_at', { ascending: false })
+        supabase.from('projects').select('*').order('created_at', { ascending: false }),
+        (supabase as any).from('transactions').select('*').order('created_at', { ascending: false })
       ]);
 
       if (investorsResponse.error) throw investorsResponse.error;
@@ -56,6 +90,11 @@ const Dashboard = () => {
 
       setRealInvestors(investorsResponse.data || []);
       setRealProjects(projectsResponse.data || []);
+      if (!transactionsResponse.error) {
+        setRealTransactions(transactionsResponse.data || []);
+      } else {
+        setRealTransactions([]);
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
       toast({
@@ -67,7 +106,6 @@ const Dashboard = () => {
       setLoading(false);
     }
   };
-
   const handleLogout = () => {
     localStorage.removeItem("admin_authenticated");
     navigate("/admin-login");
@@ -75,6 +113,18 @@ const Dashboard = () => {
       title: "Logged out",
       description: "You have been logged out successfully",
     });
+  };
+
+  const updateInvestorStatus = async (id: string, status: string) => {
+    try {
+      const { error } = await supabase.from('investors').update({ status }).eq('id', id);
+      if (error) throw error;
+      toast({ title: 'Status updated', description: `Investor marked as ${status}` });
+      fetchData();
+    } catch (e) {
+      console.error(e);
+      toast({ title: 'Update failed', description: 'Could not update investor status', variant: 'destructive' });
+    }
   };
 
   const dashboardStats = {
@@ -236,8 +286,14 @@ const Dashboard = () => {
             <TabsTrigger value="projects" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
               Project Tracker
             </TabsTrigger>
-            <TabsTrigger value="documents" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
-              Document Library
+            <TabsTrigger value="transactions" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
+              Transactions
+            </TabsTrigger>
+            <TabsTrigger value="reports" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
+              Reports & Analytics
+            </TabsTrigger>
+            <TabsTrigger value="content" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
+              Content Management
             </TabsTrigger>
             <TabsTrigger value="messages" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
               Internal Messages
@@ -300,6 +356,12 @@ const Dashboard = () => {
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center space-x-2">
+                            <Button variant="ghost" size="sm" onClick={() => updateInvestorStatus(investor.id, 'Verified')}>
+                              Verify
+                            </Button>
+                            <Button variant="ghost" size="sm" onClick={() => updateInvestorStatus(investor.id, 'Suspended')} className="text-red-600 hover:text-red-700">
+                              Suspend
+                            </Button>
                             <Button variant="ghost" size="sm">
                               <Eye className="w-4 h-4" />
                             </Button>
@@ -382,29 +444,95 @@ const Dashboard = () => {
             </Card>
           </TabsContent>
 
-          {/* Document Library */}
-          <TabsContent value="documents">
+          {/* Content Management */}
+          <TabsContent value="content">
             <Card className="bg-white border-gold-medium/20">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle className="text-navy-primary">Document Library</CardTitle>
-                    <CardDescription>Upload and organize files by investor or project</CardDescription>
+                    <CardTitle className="text-navy-primary">Content Management</CardTitle>
+                    <CardDescription>Update banners, blog posts, FAQs, and legal pages</CardDescription>
                   </div>
                   <Button className="bg-navy-primary hover:bg-navy-light">
                     <Upload className="w-4 h-4 mr-2" />
-                    Upload Document
+                    Manage Content
                   </Button>
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="text-center py-12">
                   <FolderOpen className="w-12 h-12 text-gold-medium mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-navy-primary mb-2">No documents uploaded yet</h3>
-                  <p className="text-muted-foreground mb-4">Start by uploading your first document</p>
+                  <h3 className="text-lg font-medium text-navy-primary mb-2">No content items yet</h3>
+                  <p className="text-muted-foreground mb-4">Banners, posts, FAQs and policies will appear here</p>
                   <Button variant="outline" className="border-navy-primary/20">
                     <Upload className="w-4 h-4 mr-2" />
-                    Upload Document
+                    Add Content
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Transactions */}
+          <TabsContent value="transactions">
+            <Card className="bg-white border-gold-medium/20">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="text-navy-primary">Transactions</CardTitle>
+                    <CardDescription>View, filter, and approve deposits and withdrawals</CardDescription>
+                  </div>
+                  <Button variant="outline" className="border-navy-primary/20">
+                    <Download className="w-4 h-4 mr-2" />
+                    Export CSV
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Investor</TableHead>
+                      <TableHead>Type</TableHead>
+                      <TableHead>Amount</TableHead>
+                      <TableHead>Status</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {(realTransactions.length ? realTransactions : mockTransactions).map((tx: any) => (
+                      <TableRow key={tx.id}>
+                        <TableCell>{tx.date || new Date(tx.created_at).toLocaleDateString()}</TableCell>
+                        <TableCell>{tx.investor || tx.investor_name || '-'}</TableCell>
+                        <TableCell>{tx.type}</TableCell>
+                        <TableCell>{tx.currency || 'USD'} {tx.amount?.toLocaleString?.() ?? tx.amount}</TableCell>
+                        <TableCell>
+                          <Badge className={getStatusColor((tx.status || '').toString())}>{tx.status}</Badge>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Reports */}
+          <TabsContent value="reports">
+            <Card className="bg-white border-gold-medium/20">
+              <CardHeader>
+                <CardTitle className="text-navy-primary">Reports & Analytics</CardTitle>
+                <CardDescription>Downloadable reports for investors, projects, and transactions</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-3">
+                  <Button onClick={exportToExcel} className="bg-navy-primary hover:bg-navy-light">
+                    <Download className="w-4 h-4 mr-2" />
+                    Export Excel
+                  </Button>
+                  <Button variant="outline" onClick={exportToPDF} className="border-navy-primary/20">
+                    <Download className="w-4 h-4 mr-2" />
+                    Export PDF
                   </Button>
                 </div>
               </CardContent>
