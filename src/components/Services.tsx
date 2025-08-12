@@ -55,8 +55,8 @@ export default function Services() {
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-navy-primary mb-6">
-            About Us - Comprehensive Investment Services
+          <h2 className="text-3xl font-bold text-navy-primary mb-6">
+            About Our Services
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             From initial market entry to post-investment support, we provide end-to-end 
@@ -105,7 +105,7 @@ export default function Services() {
             <Button 
               variant="premium" 
               size="lg"
-              onClick={() => window.location.href = '/investor-portal'}
+              onClick={() => window.dispatchEvent(new CustomEvent('open-consultation'))}
             >
               Schedule Consultation
               <ArrowRight className="w-5 h-5" />

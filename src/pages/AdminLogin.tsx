@@ -69,7 +69,7 @@ const AdminLogin = () => {
             <span className="text-2xl font-bold text-navy-deep">Q</span>
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">
-            Qalbi<span className="text-gold-medium">.</span> Admin
+            Qalby<span className="text-gold-medium">.</span> Admin
           </h1>
           <p className="text-gold-light">Investment Management Portal</p>
         </div>

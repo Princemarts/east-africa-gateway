@@ -193,7 +193,7 @@ const OpportunitiesPage = () => {
               Join Investor Network
               <ArrowRight className="w-5 h-5" />
             </Button>
-            <Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" onClick={() => window.dispatchEvent(new CustomEvent('open-consultation'))}>
               Schedule Consultation
             </Button>
           </div>

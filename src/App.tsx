@@ -11,6 +11,7 @@ import OpportunitiesPage from "./pages/OpportunitiesPage";
 import InvestorPortal from "./pages/InvestorPortal";
 import AdminLogin from "./pages/AdminLogin";
 import ContactPage from "./pages/ContactPage";
+import ConsultationDialog from "@/components/ConsultationDialog";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,8 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        {/* Global consultation dialog */}
+        <ConsultationDialog />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/opportunities" element={<OpportunitiesPage />} />

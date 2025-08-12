@@ -13,7 +13,7 @@ import {
 
 export default function About() {
   const milestones = [
-    { year: "2018", event: "Qalbi Investments Founded", description: "Established with a vision to bridge foreign investment gaps in East Africa" },
+    { year: "2018", event: "Qalby Investments Founded", description: "Established with a vision to bridge foreign investment gaps in East Africa" },
     { year: "2019", event: "First Major Deal", description: "Facilitated $2M agro-processing investment in Uganda" },
     { year: "2021", event: "Regional Expansion", description: "Extended operations to Kenya and Tanzania markets" },
     { year: "2023", event: "Healthcare Initiative", description: "Launched specialized healthcare investment program" },
@@ -44,14 +44,14 @@ export default function About() {
         {/* Header */}
         <div className="text-center mb-16">
           <Badge variant="outline" className="mb-4">
-            About Qalbi Investments
+            About Qalby Investments
           </Badge>
-          <h2 className="text-4xl md:text-5xl font-bold text-navy-primary mb-6">
+          <h2 className="text-3xl font-bold text-navy-primary mb-6">
             Reshaping Foreign Investment in East Africa
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
             Led by Twahir Ismail, a seasoned professional advisor with extensive experience 
-            working with governments and investors, Qalbi Investments specializes in unlocking 
+            working with governments and investors, Qalby Investments specializes in unlocking 
             real opportunities for foreign investors across Uganda, Kenya, and Tanzania.
           </p>
         </div>

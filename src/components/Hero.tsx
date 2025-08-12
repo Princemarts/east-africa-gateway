@@ -64,7 +64,7 @@ export default function Hero() {
               variant="consultation" 
               size="lg" 
               className="w-full sm:w-auto min-w-[200px]"
-              onClick={() => window.location.href = '/investor-portal'}
+              onClick={() => window.dispatchEvent(new CustomEvent('open-consultation'))}
             >
               Book Consultation
             </Button>

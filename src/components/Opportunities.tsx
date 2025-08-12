@@ -90,7 +90,7 @@ export default function Opportunities() {
           <Badge variant="outline" className="mb-4">
             Investment Opportunities
           </Badge>
-          <h2 className="text-4xl md:text-5xl font-bold text-navy-primary mb-6">
+          <h2 className="text-3xl font-bold text-navy-primary mb-6">
             Current Investment Opportunities
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">

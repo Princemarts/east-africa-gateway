@@ -51,7 +51,7 @@ export default function Contact() {
     {
       icon: Mail,
       title: "Email",
-      details: ["info@qalbiinvestments.com", "twahir@qalbiinvestments.com"],
+      details: ["info@qalbyinvestments.com", "twahir@qalbyinvestments.com"],
       primary: "Response within 4 hours"
     },
     {
@@ -67,7 +67,7 @@ export default function Contact() {
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-navy-primary mb-6">
+          <h2 className="text-3xl font-bold text-navy-primary mb-6">
             Get In Touch
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -209,7 +209,7 @@ export default function Contact() {
                   Book a free 30-minute consultation call to discuss your investment goals 
                   and explore opportunities that match your criteria.
                 </p>
-                <Button variant="hero" size="lg" className="w-full">
+                <Button variant="hero" size="lg" className="w-full" onClick={() => window.dispatchEvent(new CustomEvent('open-consultation'))}>
                   Book Free Consultation
                 </Button>
               </CardContent>

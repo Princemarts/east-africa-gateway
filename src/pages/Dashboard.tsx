@@ -207,7 +207,7 @@ const { toast } = useToast();
               <span className="text-navy-deep font-bold text-lg">Q</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">Qalbi Admin Dashboard</h1>
+              <h1 className="text-xl font-bold text-white">Qalby Admin Dashboard</h1>
               <p className="text-gold-light text-sm">Investment Management Portal</p>
             </div>
           </div>
