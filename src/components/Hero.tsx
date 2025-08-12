@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight, TrendingUp, MapPin } from "lucide-react";
 import heroImage from "@/assets/hero-africa-investment.jpg";

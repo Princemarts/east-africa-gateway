@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import OpportunitiesPage from "./pages/OpportunitiesPage";
 import InvestorPortal from "./pages/InvestorPortal";
 import AdminLogin from "./pages/AdminLogin";
+import ContactPage from "./pages/ContactPage";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/opportunities" element={<OpportunitiesPage />} />
           <Route path="/investor-portal" element={<InvestorPortal />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/dashboard" element={<Dashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

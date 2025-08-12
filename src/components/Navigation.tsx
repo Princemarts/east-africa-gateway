@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
@@ -9,6 +10,7 @@ export default function Navigation() {
     { name: "Home", href: "/" },
     { name: "Services", href: "#services" },
     { name: "Opportunities", href: "/opportunities" },
+    { name: "Contact", href: "/contact" },
     { name: "Admin", href: "/admin-login" },
   ];
 
@@ -19,7 +21,7 @@ export default function Navigation() {
           {/* Logo */}
           <div className="flex items-center">
             <div className="text-2xl font-bold text-navy-primary">
-              Qalbi<span className="text-gold-medium">.</span>
+              Qalby<span className="text-gold-medium">.</span>
             </div>
             <div className="ml-2 text-sm text-muted-foreground hidden sm:block">
               Investments
