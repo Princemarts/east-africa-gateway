@@ -11,7 +11,6 @@ export default function Navigation() {
     { name: "Services", href: "#services" },
     { name: "Opportunities", href: "/opportunities" },
     { name: "Contact", href: "/contact" },
-    { name: "Admin", href: "/admin-login" },
   ];
 
   return (

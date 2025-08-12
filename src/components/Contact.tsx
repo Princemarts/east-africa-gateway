@@ -198,36 +198,6 @@ export default function Contact() {
               ))}
             </div>
 
-            {/* Quick Actions */}
-            <Card className="bg-gradient-primary text-white border-none shadow-elegant">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                  <Calendar className="w-6 h-6" />
-                  Schedule a Consultation
-                </h3>
-                <p className="mb-6 opacity-90">
-                  Book a free 30-minute consultation call to discuss your investment goals 
-                  and explore opportunities that match your criteria.
-                </p>
-                <Button variant="hero" size="lg" className="w-full" onClick={() => window.dispatchEvent(new CustomEvent('open-consultation'))}>
-                  Book Free Consultation
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Newsletter Signup */}
-            <Card className="border-none bg-gold-light">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-bold text-navy-primary mb-4">Stay Updated</h3>
-                <p className="text-navy-primary mb-4">
-                  Get monthly insights on investment opportunities, policy updates, and market trends.
-                </p>
-                <div className="flex gap-2">
-                  <Input placeholder="Enter your email" className="bg-white" />
-                  <Button variant="professional">Subscribe</Button>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </div>

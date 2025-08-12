@@ -50,7 +50,7 @@ export default function About() {
             Reshaping Foreign Investment in East Africa
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-            Led by Twahir Ismail, a seasoned professional advisor with extensive experience 
+            Led by CEO Twahir Ismail, a seasoned professional advisor with extensive experience 
             working with governments and investors, Qalby Investments specializes in unlocking 
             real opportunities for foreign investors across Uganda, Kenya, and Tanzania.
           </p>
