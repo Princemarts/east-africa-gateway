@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Lock, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 const AdminLogin = () => {
   const [credentials, setCredentials] = useState({
@@ -20,23 +21,43 @@ const AdminLogin = () => {
     e.preventDefault();
     setLoading(true);
 
-    // Simple authentication check
-    if (credentials.username === "admin" && credentials.password === "123456") {
-      localStorage.setItem("admin_authenticated", "true");
-      toast({
-        title: "Login Successful",
-        description: "Welcome to the admin dashboard",
+    try {
+      // Use the secure RPC function to verify admin credentials
+      const { data: isValidAdmin, error } = await supabase.rpc('verify_admin_login', {
+        username_input: credentials.username,
+        password_input: credentials.password
       });
-      navigate("/dashboard");
-    } else {
+
+      if (error) {
+        console.error('Login error:', error);
+        throw new Error('Authentication failed');
+      }
+
+      if (isValidAdmin) {
+        localStorage.setItem("admin_authenticated", "true");
+        localStorage.setItem("admin_username", credentials.username);
+        toast({
+          title: "Login Successful",
+          description: "Welcome to the admin dashboard",
+        });
+        navigate("/dashboard");
+      } else {
+        toast({
+          title: "Login Failed",
+          description: "Invalid username or password",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Authentication error:', error);
       toast({
         title: "Login Failed",
-        description: "Invalid username or password",
+        description: "Authentication service unavailable",
         variant: "destructive",
       });
+    } finally {
+      setLoading(false);
     }
-    
-    setLoading(false);
   };
 
   return (
