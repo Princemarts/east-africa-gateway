@@ -6,12 +6,9 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
 
   const navigation = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
+    { name: "Home", href: "/" },
     { name: "Services", href: "#services" },
-    { name: "Opportunities", href: "#opportunities" },
-    { name: "Insights", href: "#insights" },
-    { name: "Contact", href: "#contact" },
+    { name: "Opportunities", href: "/opportunities" },
   ];
 
   return (
@@ -43,10 +40,18 @@ export default function Navigation() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Button variant="outline" size="sm">
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => window.location.href = '/investor-portal'}
+            >
               Investor Portal
             </Button>
-            <Button variant="professional" size="sm">
+            <Button 
+              variant="professional" 
+              size="sm"
+              onClick={() => window.location.href = '/investor-portal'}
+            >
               Get Started
             </Button>
           </div>
@@ -78,10 +83,20 @@ export default function Navigation() {
                 </a>
               ))}
               <div className="flex flex-col space-y-3 pt-4 border-t border-gray-200">
-                <Button variant="outline" size="sm" className="w-full">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full"
+                  onClick={() => window.location.href = '/investor-portal'}
+                >
                   Investor Portal
                 </Button>
-                <Button variant="professional" size="sm" className="w-full">
+                <Button 
+                  variant="professional" 
+                  size="sm" 
+                  className="w-full"
+                  onClick={() => window.location.href = '/investor-portal'}
+                >
                   Get Started
                 </Button>
               </div>

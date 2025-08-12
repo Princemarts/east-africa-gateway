@@ -199,11 +199,19 @@ export default function Opportunities() {
             your specific investment criteria and sector preferences.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="premium" size="lg">
+            <Button 
+              variant="premium" 
+              size="lg"
+              onClick={() => window.location.href = '/investor-portal'}
+            >
               <Users className="w-5 h-5" />
               Join Investor Network
             </Button>
-            <Button variant="outline" size="lg">
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={() => window.location.href = '/opportunities'}
+            >
               Custom Opportunity Search
             </Button>
           </div>

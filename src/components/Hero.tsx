@@ -50,11 +50,21 @@ export default function Hero() {
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-            <Button variant="hero" size="lg" className="w-full sm:w-auto min-w-[200px]">
+            <Button 
+              variant="hero" 
+              size="lg" 
+              className="w-full sm:w-auto min-w-[200px]"
+              onClick={() => window.location.href = '/opportunities'}
+            >
               Explore Opportunities
               <ArrowRight className="w-5 h-5" />
             </Button>
-            <Button variant="consultation" size="lg" className="w-full sm:w-auto min-w-[200px]">
+            <Button 
+              variant="consultation" 
+              size="lg" 
+              className="w-full sm:w-auto min-w-[200px]"
+              onClick={() => window.location.href = '/investor-portal'}
+            >
               Book Consultation
             </Button>
           </div>

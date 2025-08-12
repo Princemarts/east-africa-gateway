@@ -56,7 +56,7 @@ export default function Services() {
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-navy-primary mb-6">
-            Comprehensive Investment Services
+            About Us - Comprehensive Investment Services
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             From initial market entry to post-investment support, we provide end-to-end 
@@ -102,11 +102,19 @@ export default function Services() {
             Our team of experts is ready to guide you through every step of your East African investment journey.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="premium" size="lg">
+            <Button 
+              variant="premium" 
+              size="lg"
+              onClick={() => window.location.href = '/investor-portal'}
+            >
               Schedule Consultation
               <ArrowRight className="w-5 h-5" />
             </Button>
-            <Button variant="outline" size="lg">
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={() => window.location.href = '/opportunities'}
+            >
               Download Service Guide
             </Button>
           </div>

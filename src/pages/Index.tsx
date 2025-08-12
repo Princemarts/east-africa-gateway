@@ -1,9 +1,7 @@
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
 import Services from "@/components/Services";
 import Opportunities from "@/components/Opportunities";
-import Contact from "@/components/Contact";
 
 const Index = () => {
   return (
@@ -11,10 +9,8 @@ const Index = () => {
       <Navigation />
       <main>
         <Hero />
-        <About />
         <Services />
         <Opportunities />
-        <Contact />
       </main>
       
       {/* Footer */}
@@ -37,20 +33,20 @@ const Index = () => {
             <div>
               <h4 className="font-bold mb-4">Services</h4>
               <ul className="space-y-2 text-gray-300">
-                <li><a href="#" className="hover:text-gold-medium transition-colors">Investment Advisory</a></li>
-                <li><a href="#" className="hover:text-gold-medium transition-colors">Market Research</a></li>
-                <li><a href="#" className="hover:text-gold-medium transition-colors">Tax Incentives</a></li>
-                <li><a href="#" className="hover:text-gold-medium transition-colors">Legal Support</a></li>
+                <li><a href="#services" className="hover:text-gold-medium transition-colors">Investment Advisory</a></li>
+                <li><a href="#services" className="hover:text-gold-medium transition-colors">Market Research</a></li>
+                <li><a href="#services" className="hover:text-gold-medium transition-colors">Tax Incentives</a></li>
+                <li><a href="#services" className="hover:text-gold-medium transition-colors">Legal Support</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-bold mb-4">Resources</h4>
               <ul className="space-y-2 text-gray-300">
-                <li><a href="#" className="hover:text-gold-medium transition-colors">Investment Guide</a></li>
-                <li><a href="#" className="hover:text-gold-medium transition-colors">Market Reports</a></li>
-                <li><a href="#" className="hover:text-gold-medium transition-colors">Success Stories</a></li>
-                <li><a href="#" className="hover:text-gold-medium transition-colors">Blog</a></li>
+                <li><a href="#opportunities" className="hover:text-gold-medium transition-colors">Investment Guide</a></li>
+                <li><a href="#opportunities" className="hover:text-gold-medium transition-colors">Market Reports</a></li>
+                <li><a href="#opportunities" className="hover:text-gold-medium transition-colors">Success Stories</a></li>
+                <li><a href="/investor-portal" className="hover:text-gold-medium transition-colors">Investor Portal</a></li>
               </ul>
             </div>
           </div>

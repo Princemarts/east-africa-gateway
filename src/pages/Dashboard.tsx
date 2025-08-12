@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -18,18 +19,69 @@ import {
   Upload,
   Eye,
   Edit,
-  Trash2
+  Trash2,
+  LogOut
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [realInvestors, setRealInvestors] = useState([]);
+  const [realProjects, setRealProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
-  // Mock data - in real app this would come from Supabase
+  useEffect(() => {
+    // Check if user is authenticated
+    const isAuthenticated = localStorage.getItem("admin_authenticated");
+    if (!isAuthenticated) {
+      navigate("/admin-login");
+      return;
+    }
+    
+    fetchData();
+  }, [navigate]);
+
+  const fetchData = async () => {
+    try {
+      const [investorsResponse, projectsResponse] = await Promise.all([
+        supabase.from('investors').select('*').order('created_at', { ascending: false }),
+        supabase.from('projects').select('*').order('created_at', { ascending: false })
+      ]);
+
+      if (investorsResponse.error) throw investorsResponse.error;
+      if (projectsResponse.error) throw projectsResponse.error;
+
+      setRealInvestors(investorsResponse.data || []);
+      setRealProjects(projectsResponse.data || []);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load dashboard data",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("admin_authenticated");
+    navigate("/admin-login");
+    toast({
+      title: "Logged out",
+      description: "You have been logged out successfully",
+    });
+  };
+
   const dashboardStats = {
-    totalInvestors: 24,
-    activeProjects: 8,
-    onboardingProcesses: 5,
-    recentMessages: 12
+    totalInvestors: realInvestors.length,
+    activeProjects: realProjects.filter(p => p.status === 'Active' || p.status === 'Negotiation').length,
+    onboardingProcesses: realInvestors.filter(i => i.status === 'Onboarding').length,
+    recentMessages: realInvestors.filter(i => i.status === 'New').length
   };
 
   const mockInvestors = [
@@ -111,8 +163,17 @@ const Dashboard = () => {
           </div>
           <div className="flex items-center space-x-3">
             <Button variant="outline" size="sm" className="border-gold-medium/30 text-gold-medium hover:bg-gold-medium hover:text-navy-deep">
-              <Settings className="w-4 h-4 mr-2 text-gold-medium" />
+              <Settings className="w-4 h-4 mr-2" />
               Settings
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleLogout}
+              className="border-red-400/30 text-red-400 hover:bg-red-400 hover:text-white"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
             </Button>
           </div>
         </div>
@@ -226,7 +287,7 @@ const Dashboard = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {mockInvestors.map((investor) => (
+                    {realInvestors.map((investor) => (
                       <TableRow key={investor.id}>
                         <TableCell className="font-medium">{investor.name}</TableCell>
                         <TableCell>{investor.company}</TableCell>
@@ -275,7 +336,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {mockProjects.map((project) => (
+                  {realProjects.map((project) => (
                     <Card key={project.id} className="border-gold-medium/10">
                       <CardHeader>
                         <div className="flex items-start justify-between">
@@ -296,7 +357,7 @@ const Dashboard = () => {
                           </div>
                           <div className="flex justify-between">
                             <span className="text-sm text-muted-foreground">Investment:</span>
-                            <span className="text-sm font-medium">{project.investmentSize}</span>
+                            <span className="text-sm font-medium">{project.investment_size}</span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-sm text-muted-foreground">Timeline:</span>
