@@ -130,12 +130,6 @@ const AdminLogin = () => {
               </Button>
             </form>
 
-            {/* Demo Credentials */}
-            <div className="mt-6 p-4 bg-white/5 rounded-lg border border-gold-medium/20">
-              <p className="text-sm text-gold-light mb-2">Demo Credentials:</p>
-              <p className="text-xs text-white/70">Username: admin</p>
-              <p className="text-xs text-white/70">Password: 123456</p>
-            </div>
           </CardContent>
         </Card>
       </div>
