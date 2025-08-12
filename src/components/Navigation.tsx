@@ -9,6 +9,7 @@ export default function Navigation() {
     { name: "Home", href: "/" },
     { name: "Services", href: "#services" },
     { name: "Opportunities", href: "/opportunities" },
+    { name: "Admin", href: "/admin-login" },
   ];
 
   return (
