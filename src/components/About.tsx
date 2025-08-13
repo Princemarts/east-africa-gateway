@@ -50,7 +50,7 @@ export default function About() {
           <h2 className="text-3xl font-bold text-navy-primary mb-6">
             About Our Services
           </h2>
-          <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
+          <p className="text-muted-foreground max-w-4xl mx-auto">
             Led by CEO Twahir Ismail, a seasoned professional advisor with extensive experience 
             working with governments and investors, Qalby Investments specializes in unlocking 
             real opportunities for foreign investors across Uganda, Kenya, and Tanzania. We 
@@ -78,42 +78,19 @@ export default function About() {
 
         {/* Journey section removed */}
 
-        {/* Leadership CTA with CEO Image */}
-        <div className="bg-earth-warm rounded-2xl p-8 overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            {/* CEO Image */}
-            <div className="relative order-2 lg:order-1">
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-primary p-1">
-                <div className="w-full h-full rounded-xl overflow-hidden">
-                  <img
-                    src="/lovable-uploads/d7a52fe1-4b8e-4608-ad01-ae97741ea1a3.png"
-                    alt="Twahir Ismail, CEO of Qalby Investments"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-              {/* CEO Info Overlay */}
-              <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm rounded-xl p-4">
-                <h4 className="font-bold text-navy-primary mb-1">Twahir Ismail</h4>
-                <p className="text-sm text-gold-medium font-medium">Chief Executive Officer</p>
-              </div>
-            </div>
-            
-            {/* Content */}
-            <div className="text-center lg:text-left order-1 lg:order-2">
-              <h3 className="text-2xl font-bold text-navy-primary mb-4">Meet Our Leadership Team</h3>
-              <p className="text-muted-foreground mb-6">
-                Learn more about Twahir Ismail and our experienced team of investment professionals 
-                who make successful East African investments possible.
-              </p>
-              <Link to="/team">
-                <Button variant="professional" size="lg">
-                  Our Team
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </Link>
-            </div>
-          </div>
+        {/* Leadership CTA */}
+        <div className="bg-earth-warm rounded-2xl p-8 text-center">
+          <h3 className="text-2xl font-bold text-navy-primary mb-4">Meet Our Leadership Team</h3>
+          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+            Learn more about our experienced team of investment professionals 
+            who make successful East African investments possible.
+          </p>
+          <Link to="/team">
+            <Button variant="professional" size="lg">
+              Our Team
+              <ArrowRight className="w-5 h-5" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

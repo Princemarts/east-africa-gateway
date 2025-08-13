@@ -18,6 +18,30 @@ export default function TeamPage() {
       expertise: ["Government Relations", "Investment Strategy", "Market Analysis", "Deal Structuring"],
       email: "twahir@qalbyinvestments.com",
       phone: "+256 700 123 456"
+    },
+    {
+      id: 2,
+      name: "Kizito Allan",
+      role: "Managing Director",
+      image: "/lovable-uploads/572c148b-7a6b-4e2e-8a28-a672d3bc3079.png",
+      bio: "Experienced business leader with deep expertise in East African markets and investment operations. Kizito oversees day-to-day operations and ensures seamless execution of client projects across our target regions.",
+      experience: "12+ years",
+      education: "Master's in Business Administration",
+      expertise: ["Operations Management", "Business Development", "Client Relations", "Strategic Planning"],
+      email: "kizito@qalbyinvestments.com",
+      phone: "+256 700 234 567"
+    },
+    {
+      id: 3,
+      name: "Tuhame Mathias",
+      role: "Marketing Manager",
+      image: "/lovable-uploads/a2410ac5-a694-4083-9e66-b1973ce24cc2.png",
+      bio: "Dynamic marketing professional specializing in investment sector communications and brand management. Mathias drives our marketing initiatives and manages investor relations across digital and traditional platforms.",
+      experience: "8+ years",
+      education: "Bachelor's in Marketing & Communications",
+      expertise: ["Digital Marketing", "Brand Management", "Investor Communications", "Market Research"],
+      email: "mathias@qalbyinvestments.com",
+      phone: "+256 700 345 678"
     }
   ];
 
