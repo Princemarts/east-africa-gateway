@@ -26,12 +26,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
+import ProjectManagementDialog from "@/components/ProjectManagementDialog";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [realInvestors, setRealInvestors] = useState([]);
   const [realProjects, setRealProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showProjectDialog, setShowProjectDialog] = useState(false);
+  const [editingProject, setEditingProject] = useState(null);
   const navigate = useNavigate();
 const { toast } = useToast();
 
@@ -125,6 +128,30 @@ const { toast } = useToast();
       console.error(e);
       toast({ title: 'Update failed', description: 'Could not update investor status', variant: 'destructive' });
     }
+  };
+
+  const deleteProject = async (id: string) => {
+    if (window.confirm('Are you sure you want to delete this project?')) {
+      try {
+        const { error } = await supabase.from('projects').delete().eq('id', id);
+        if (error) throw error;
+        toast({ title: 'Project deleted', description: 'Project has been removed successfully' });
+        fetchData();
+      } catch (e) {
+        console.error(e);
+        toast({ title: 'Delete failed', description: 'Could not delete project', variant: 'destructive' });
+      }
+    }
+  };
+
+  const editProject = (project: any) => {
+    setEditingProject(project);
+    setShowProjectDialog(true);
+  };
+
+  const handleProjectDialogClose = () => {
+    setShowProjectDialog(false);
+    setEditingProject(null);
   };
 
   const dashboardStats = {
@@ -390,7 +417,10 @@ const { toast } = useToast();
                     <CardTitle className="text-navy-primary">Project Tracker</CardTitle>
                     <CardDescription>Manage investment opportunities and track progress</CardDescription>
                   </div>
-                  <Button className="bg-navy-primary hover:bg-navy-light">
+                  <Button 
+                    className="bg-navy-primary hover:bg-navy-light"
+                    onClick={() => setShowProjectDialog(true)}
+                  >
                     <Plus className="w-4 h-4 mr-2" />
                     Add Project
                   </Button>
@@ -427,13 +457,31 @@ const { toast } = useToast();
                           </div>
                         </div>
                         <div className="flex items-center space-x-2 mt-4">
-                          <Button variant="outline" size="sm" className="flex-1">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="flex-1"
+                            onClick={() => window.open(`/project/${project.id}`, '_blank')}
+                          >
                             <Eye className="w-4 h-4 mr-2" />
-                            View Details
+                            View Live
                           </Button>
-                          <Button variant="outline" size="sm" className="flex-1">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="flex-1"
+                            onClick={() => editProject(project)}
+                          >
                             <Edit className="w-4 h-4 mr-2" />
                             Edit
+                          </Button>
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="text-red-600 hover:text-red-700"
+                            onClick={() => deleteProject(project.id)}
+                          >
+                            <Trash2 className="w-4 h-4" />
                           </Button>
                         </div>
                       </CardContent>
@@ -561,6 +609,14 @@ const { toast } = useToast();
           </TabsContent>
         </Tabs>
       </div>
+      
+      {/* Project Management Dialog */}
+      <ProjectManagementDialog 
+        isOpen={showProjectDialog}
+        onClose={handleProjectDialogClose}
+        project={editingProject}
+        onSuccess={fetchData}
+      />
     </div>
   );
 };

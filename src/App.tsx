@@ -11,6 +11,7 @@ import OpportunitiesPage from "./pages/OpportunitiesPage";
 import InvestorPortal from "./pages/InvestorPortal";
 import AdminLogin from "./pages/AdminLogin";
 import ContactPage from "./pages/ContactPage";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
 import ConsultationDialog from "@/components/ConsultationDialog";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/opportunities" element={<OpportunitiesPage />} />
           <Route path="/investor-portal" element={<InvestorPortal />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/project/:id" element={<ProjectDetailPage />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/dashboard" element={<Dashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

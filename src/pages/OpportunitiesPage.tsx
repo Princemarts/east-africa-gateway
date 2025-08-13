@@ -159,8 +159,11 @@ const OpportunitiesPage = () => {
                   </div>
                 )}
 
-                <Button className="w-full bg-navy-primary hover:bg-navy-light">
-                  Learn More
+                <Button 
+                  className="w-full bg-navy-primary hover:bg-navy-light"
+                  onClick={() => window.location.href = `/project/${project.id}`}
+                >
+                  View Details & Express Interest
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </CardContent>

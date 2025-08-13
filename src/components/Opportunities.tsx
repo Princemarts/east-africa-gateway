@@ -160,8 +160,13 @@ export default function Opportunities() {
 
                 {/* CTA */}
                 <div className="pt-4 border-t border-gray-100">
-                  <Button variant="outline" size="sm" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                    Express Interest
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                    onClick={() => window.location.href = `/project/${opportunity.id}`}
+                  >
+                    View Details
                     <ArrowRight className="w-4 h-4" />
                   </Button>
                 </div>

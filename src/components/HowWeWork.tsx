@@ -29,18 +29,41 @@ export default function HowWeWork() {
       <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Illustration */}
         <div className="relative order-2 lg:order-1">
-          <div className="aspect-[4/3] rounded-2xl bg-gradient-primary shadow-elegant overflow-hidden">
+          <div className="aspect-[4/3] rounded-2xl bg-gradient-primary shadow-elegant overflow-hidden relative">
+            {/* Background pattern */}
             <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_30%_20%,white,transparent_35%),radial-gradient(circle_at_80%_60%,white,transparent_25%)]" />
-            <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-sm rounded-xl p-4 grid grid-cols-2 gap-4">
-              {steps.slice(0,2).map((s, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <s.icon className="w-5 h-5 text-navy-primary" />
-                  <div>
-                    <div className="text-sm font-semibold text-navy-primary">{s.title}</div>
-                    <div className="text-xs text-muted-foreground">{s.desc}</div>
-                  </div>
+            
+            {/* Process flow illustration */}
+            <div className="absolute inset-6 flex flex-col justify-between">
+              {/* Top flow */}
+              <div className="flex justify-between items-center">
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                  <Search className="w-8 h-8 text-white" />
                 </div>
-              ))}
+                <div className="flex-1 h-0.5 bg-white/30 mx-4"></div>
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                  <CheckCircle className="w-8 h-8 text-white" />
+                </div>
+              </div>
+              
+              {/* Bottom flow */}
+              <div className="flex justify-between items-center">
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                  <Handshake className="w-8 h-8 text-white" />
+                </div>
+                <div className="flex-1 h-0.5 bg-white/30 mx-4"></div>
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                  <ShieldCheck className="w-8 h-8 text-white" />
+                </div>
+              </div>
+            </div>
+            
+            {/* Info overlay */}
+            <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-sm rounded-xl p-4">
+              <div className="text-center">
+                <h4 className="text-sm font-bold text-navy-primary mb-1">Proven Investment Process</h4>
+                <p className="text-xs text-muted-foreground">From discovery to execution</p>
+              </div>
             </div>
           </div>
         </div>
