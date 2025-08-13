@@ -39,8 +39,8 @@ export default function Contact() {
     {
       icon: MapPin,
       title: "Office Location",
-      details: ["Kampala, Uganda", "Nairobi, Kenya", "Dar es Salaam, Tanzania"],
-      primary: "Regional offices across East Africa"
+      details: ["Kampala, Uganda"],
+      primary: "Main office in Kampala"
     },
     {
       icon: Phone,

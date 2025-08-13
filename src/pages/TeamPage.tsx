@@ -17,7 +17,7 @@ export default function TeamPage() {
       education: "MBA in International Business",
       expertise: ["Government Relations", "Investment Strategy", "Market Analysis", "Deal Structuring"],
       email: "twahir@qalbyinvestments.com",
-      phone: "+256 700 123 456"
+      phone: "+256 756 796761"
     },
     {
       id: 2,
@@ -29,7 +29,7 @@ export default function TeamPage() {
       education: "Master's in Business Administration",
       expertise: ["Operations Management", "Business Development", "Client Relations", "Strategic Planning"],
       email: "kizito@qalbyinvestments.com",
-      phone: "+256 700 234 567"
+      phone: "+256 789 08084"
     },
     {
       id: 3,
@@ -41,7 +41,7 @@ export default function TeamPage() {
       education: "Bachelor's in Marketing & Communications",
       expertise: ["Digital Marketing", "Brand Management", "Investor Communications", "Market Research"],
       email: "mathias@qalbyinvestments.com",
-      phone: "+256 700 345 678"
+      phone: "+256767910420"
     }
   ];
 

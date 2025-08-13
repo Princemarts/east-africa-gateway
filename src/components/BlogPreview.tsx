@@ -29,7 +29,7 @@ export default function BlogPreview() {
         <h2 className="text-3xl font-bold text-navy-primary text-center mb-12">Insights & Updates</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {posts.map((p, i) => (
-            <Card key={i} className="hover-scale">
+            <Card key={i} className="hover-scale cursor-pointer" onClick={() => window.location.href = `/blog/${i + 1}`}>
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-3">
                   <Badge variant="outline">{p.tag}</Badge>

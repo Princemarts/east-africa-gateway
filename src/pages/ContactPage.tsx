@@ -23,7 +23,7 @@ const ContactPage = () => {
                 Specialized in agro-processing, healthcare, and transport sectors.
               </p>
               <div className="text-sm text-gray-400">
-                © 2024 Qalby Investments. All rights reserved.
+                © 2025 Qalby Investments. All rights reserved.
               </div>
             </div>
             

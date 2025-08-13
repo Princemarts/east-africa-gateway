@@ -8,8 +8,10 @@ export default function Navigation() {
 
   const navigation = [
     { name: "Home", href: "/" },
-    { name: "Services", href: "#services" },
+    { name: "Services", href: "/services" },
     { name: "Opportunities", href: "/opportunities" },
+    { name: "Our Team", href: "/team" },
+    { name: "Resources", href: "/resources" },
     { name: "Contact", href: "/contact" },
   ];
 
