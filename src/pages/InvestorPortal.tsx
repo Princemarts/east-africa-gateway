@@ -47,10 +47,10 @@ const InvestorPortal = () => {
 
       toast({
         title: "Registration Successful!",
-        description: "Thank you for your interest. Our team will contact you within 24 hours.",
+        description: "Please create an account to access your investor dashboard.",
       });
 
-      // Reset form
+      // Reset form and redirect to auth page
       setFormData({
         name: "",
         email: "",
@@ -61,6 +61,11 @@ const InvestorPortal = () => {
         investment_amount: "",
         notes: ""
       });
+
+      // Redirect to investor auth page after successful registration
+      setTimeout(() => {
+        window.location.href = "/investor-auth";
+      }, 2000);
     } catch (error) {
       console.error('Error submitting form:', error);
       toast({

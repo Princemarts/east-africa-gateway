@@ -65,6 +65,54 @@ export type Database = {
         }
         Relationships: []
       }
+      investor_projects: {
+        Row: {
+          created_at: string
+          id: string
+          investment_amount: number | null
+          investment_date: string | null
+          investor_id: string
+          project_id: string
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          investment_amount?: number | null
+          investment_date?: string | null
+          investor_id: string
+          project_id: string
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          investment_amount?: number | null
+          investment_date?: string | null
+          investor_id?: string
+          project_id?: string
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "investor_projects_investor_id_fkey"
+            columns: ["investor_id"]
+            isOneToOne: false
+            referencedRelation: "investors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "investor_projects_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       investors: {
         Row: {
           company: string | null
@@ -76,9 +124,11 @@ export type Database = {
           name: string
           notes: string | null
           phone: string | null
+          profile_picture: string | null
           sector: string | null
           status: string | null
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           company?: string | null
@@ -90,9 +140,11 @@ export type Database = {
           name: string
           notes?: string | null
           phone?: string | null
+          profile_picture?: string | null
           sector?: string | null
           status?: string | null
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           company?: string | null
@@ -104,9 +156,11 @@ export type Database = {
           name?: string
           notes?: string | null
           phone?: string | null
+          profile_picture?: string | null
           sector?: string | null
           status?: string | null
           updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }

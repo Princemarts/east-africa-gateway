@@ -144,6 +144,20 @@ const { toast } = useToast();
     }
   };
 
+  const deleteInvestor = async (id: string) => {
+    if (window.confirm('Are you sure you want to delete this investor?')) {
+      try {
+        const { error } = await supabase.from('investors').delete().eq('id', id);
+        if (error) throw error;
+        toast({ title: 'Investor deleted', description: 'Investor has been removed successfully' });
+        fetchData();
+      } catch (e) {
+        console.error(e);
+        toast({ title: 'Delete failed', description: 'Could not delete investor', variant: 'destructive' });
+      }
+    }
+  };
+
   const editProject = (project: any) => {
     setEditingProject(project);
     setShowProjectDialog(true);
@@ -395,7 +409,12 @@ const { toast } = useToast();
                             <Button variant="ghost" size="sm">
                               <Edit className="w-4 h-4" />
                             </Button>
-                            <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700">
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              className="text-red-600 hover:text-red-700"
+                              onClick={() => deleteInvestor(investor.id)}
+                            >
                               <Trash2 className="w-4 h-4" />
                             </Button>
                           </div>

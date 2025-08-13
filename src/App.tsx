@@ -9,6 +9,8 @@ import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import OpportunitiesPage from "./pages/OpportunitiesPage";
 import InvestorPortal from "./pages/InvestorPortal";
+import InvestorAuth from "./pages/InvestorAuth";
+import InvestorDashboard from "./pages/InvestorDashboard";
 import AdminLogin from "./pages/AdminLogin";
 import ContactPage from "./pages/ContactPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
@@ -35,6 +37,8 @@ const App = () => (
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/opportunities" element={<OpportunitiesPage />} />
           <Route path="/investor-portal" element={<InvestorPortal />} />
+          <Route path="/investor-auth" element={<InvestorAuth />} />
+          <Route path="/investor-dashboard" element={<InvestorDashboard />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/project/:id" element={<ProjectDetailPage />} />
           <Route path="/team" element={<TeamPage />} />
