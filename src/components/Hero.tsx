@@ -1,9 +1,52 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, TrendingUp, MapPin } from "lucide-react";
+import { ArrowRight, TrendingUp, MapPin, LogOut } from "lucide-react";
 import heroImage from "@/assets/hero-africa-investment.jpg";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Hero() {
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    // Check if user is logged in
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user ?? null);
+    };
+    
+    getSession();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user ?? null);
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    toast({
+      title: "Logged out",
+      description: "You have been logged out successfully",
+    });
+  };
+
+  const handleGetStarted = () => {
+    if (user) {
+      navigate('/investor-dashboard');
+    } else {
+      navigate('/investor-portal');
+    }
+  };
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background Image with Overlay */}
@@ -68,6 +111,27 @@ export default function Hero() {
             >
               Book Consultation
             </Button>
+            {user ? (
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="w-full sm:w-auto min-w-[200px] border-red-400/30 text-red-400 hover:bg-red-400 hover:text-white"
+                onClick={handleLogout}
+              >
+                <LogOut className="w-5 h-5 mr-2" />
+                Logout
+              </Button>
+            ) : (
+              <Button 
+                variant="consultation" 
+                size="lg" 
+                className="w-full sm:w-auto min-w-[200px]"
+                onClick={handleGetStarted}
+              >
+                Get Started
+                <ArrowRight className="w-5 h-5" />
+              </Button>
+            )}
           </div>
           
           {/* Stats */}

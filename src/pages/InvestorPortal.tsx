@@ -108,10 +108,8 @@ const InvestorPortal = () => {
           confirmPassword: ""
         });
 
-        // Redirect to investor dashboard
-        setTimeout(() => {
+          // Redirect to investor dashboard immediately
           navigate("/investor-dashboard");
-        }, 1500);
       }
     } catch (error: any) {
       console.error('Error submitting form:', error);

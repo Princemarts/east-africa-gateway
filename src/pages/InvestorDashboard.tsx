@@ -365,41 +365,41 @@ const InvestorDashboard = () => {
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gold-light text-sm">Portfolio Value</p>
-                  <p className="text-white text-2xl font-bold">${portfolioValue.toLocaleString()}</p>
+                  <p className="text-gold-light text-xs sm:text-sm">Portfolio Value</p>
+                  <p className="text-white text-lg sm:text-2xl font-bold">${portfolioValue.toLocaleString()}</p>
                 </div>
-                <DollarSign className="w-8 h-8 text-gold-medium" />
+                <DollarSign className="w-6 h-6 sm:w-8 sm:h-8 text-gold-medium" />
               </div>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gold-light text-sm">Active Projects</p>
-                  <p className="text-white text-2xl font-bold">{activeProjects}</p>
+                  <p className="text-gold-light text-xs sm:text-sm">Active Projects</p>
+                  <p className="text-white text-lg sm:text-2xl font-bold">{activeProjects}</p>
                 </div>
-                <Activity className="w-8 h-8 text-gold-medium" />
+                <Activity className="w-6 h-6 sm:w-8 sm:h-8 text-gold-medium" />
               </div>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gold-light text-sm">Interests</p>
-                  <p className="text-white text-2xl font-bold">{interests.length}</p>
+                  <p className="text-gold-light text-xs sm:text-sm">Interests</p>
+                  <p className="text-white text-lg sm:text-2xl font-bold">{interests.length}</p>
                 </div>
-                <Heart className="w-8 h-8 text-gold-medium" />
+                <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-gold-medium" />
               </div>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gold-light text-sm">Open Tickets</p>
-                  <p className="text-white text-2xl font-bold">{supportTickets.filter(t => t.status === 'Open').length}</p>
+                  <p className="text-gold-light text-xs sm:text-sm">Open Tickets</p>
+                  <p className="text-white text-lg sm:text-2xl font-bold">{supportTickets.filter(t => t.status === 'Open').length}</p>
                 </div>
-                <MessageSquare className="w-8 h-8 text-gold-medium" />
+                <MessageSquare className="w-6 h-6 sm:w-8 sm:h-8 text-gold-medium" />
               </div>
             </div>
           </div>
@@ -407,77 +407,82 @@ const InvestorDashboard = () => {
       </header>
 
       <div className="container mx-auto px-6 py-8">
-        {/* Main Content Tabs */}
-        <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="bg-white border border-gold-medium/20 p-1">
-            <TabsTrigger value="overview" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
-              <BarChart3 className="w-4 h-4 mr-2" />
-              Overview
+      {/* Main Content Tabs */}
+      <Tabs defaultValue="overview" className="space-y-6">
+        <div className="w-full overflow-x-auto">
+          <TabsList className="bg-white border border-gold-medium/20 p-1 w-full min-w-fit flex flex-wrap">
+            <TabsTrigger value="overview" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white flex-1 min-w-[120px] text-xs sm:text-sm">
+              <BarChart3 className="w-4 h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">Overview</span>
+              <span className="sm:hidden">Stats</span>
             </TabsTrigger>
-            <TabsTrigger value="investments" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
-              <DollarSign className="w-4 h-4 mr-2" />
-              My Investments
+            <TabsTrigger value="investments" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white flex-1 min-w-[120px] text-xs sm:text-sm">
+              <DollarSign className="w-4 h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">My Investments</span>
+              <span className="sm:hidden">Portfolio</span>
             </TabsTrigger>
-            <TabsTrigger value="interests" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
-              <Heart className="w-4 h-4 mr-2" />
-              Project Interests
+            <TabsTrigger value="interests" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white flex-1 min-w-[120px] text-xs sm:text-sm">
+              <Heart className="w-4 h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">Project Interests</span>
+              <span className="sm:hidden">Interests</span>
             </TabsTrigger>
-            <TabsTrigger value="profile" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
-              <User className="w-4 h-4 mr-2" />
+            <TabsTrigger value="profile" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white flex-1 min-w-[100px] text-xs sm:text-sm">
+              <User className="w-4 h-4 mr-1 sm:mr-2" />
               Profile
             </TabsTrigger>
-            <TabsTrigger value="support" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
-              <MessageSquare className="w-4 h-4 mr-2" />
+            <TabsTrigger value="support" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white flex-1 min-w-[100px] text-xs sm:text-sm">
+              <MessageSquare className="w-4 h-4 mr-1 sm:mr-2" />
               Support
             </TabsTrigger>
           </TabsList>
+        </div>
 
-          {/* Overview Tab */}
-          <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Portfolio Analytics */}
-              <div className="lg:col-span-2">
-                <Card className="bg-white border-gold-medium/20">
-                  <CardHeader>
-                    <CardTitle className="text-navy-primary flex items-center gap-2">
-                      <PieChart className="w-5 h-5" />
-                      Portfolio Analytics
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-6">
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="text-center p-4 bg-green-50 rounded-lg">
-                          <div className="text-2xl font-bold text-green-600">{activeProjects}</div>
-                          <div className="text-sm text-green-700">Active Projects</div>
-                        </div>
-                        <div className="text-center p-4 bg-blue-50 rounded-lg">
-                          <div className="text-2xl font-bold text-blue-600">{completedProjects}</div>
-                          <div className="text-sm text-blue-700">Completed</div>
-                        </div>
-                        <div className="text-center p-4 bg-yellow-50 rounded-lg">
-                          <div className="text-2xl font-bold text-yellow-600">{interests.length}</div>
-                          <div className="text-sm text-yellow-700">Interests</div>
-                        </div>
+        {/* Overview Tab */}
+        <TabsContent value="overview" className="space-y-4 sm:space-y-6">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6">
+            {/* Portfolio Analytics */}
+            <div className="xl:col-span-2">
+              <Card className="bg-white border-gold-medium/20">
+                <CardHeader className="p-4 sm:p-6">
+                  <CardTitle className="text-navy-primary flex items-center gap-2 text-lg sm:text-xl">
+                    <PieChart className="w-5 h-5" />
+                    Portfolio Analytics
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-4 sm:p-6 pt-0">
+                  <div className="space-y-4 sm:space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                      <div className="text-center p-3 sm:p-4 bg-green-50 rounded-lg">
+                        <div className="text-xl sm:text-2xl font-bold text-green-600">{activeProjects}</div>
+                        <div className="text-xs sm:text-sm text-green-700">Active Projects</div>
                       </div>
-
-                      {/* Investment Progress */}
-                      <div className="space-y-4">
-                        <h4 className="font-medium text-navy-primary">Investment Progress</h4>
-                        {investments.slice(0, 3).map((investment, idx) => (
-                          <div key={idx} className="space-y-2">
-                            <div className="flex justify-between text-sm">
-                              <span className="font-medium">{investment.projects?.title || 'Project'}</span>
-                              <span className="text-muted-foreground">${investment.investment_amount?.toLocaleString()}</span>
-                            </div>
-                            <Progress value={Math.random() * 100} className="h-2" />
-                          </div>
-                        ))}
+                      <div className="text-center p-3 sm:p-4 bg-blue-50 rounded-lg">
+                        <div className="text-xl sm:text-2xl font-bold text-blue-600">{completedProjects}</div>
+                        <div className="text-xs sm:text-sm text-blue-700">Completed</div>
+                      </div>
+                      <div className="text-center p-3 sm:p-4 bg-yellow-50 rounded-lg">
+                        <div className="text-xl sm:text-2xl font-bold text-yellow-600">{interests.length}</div>
+                        <div className="text-xs sm:text-sm text-yellow-700">Interests</div>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
+
+                    {/* Investment Progress */}
+                    <div className="space-y-3 sm:space-y-4">
+                      <h4 className="font-medium text-navy-primary text-sm sm:text-base">Investment Progress</h4>
+                      {investments.slice(0, 3).map((investment, idx) => (
+                        <div key={idx} className="space-y-2">
+                          <div className="flex justify-between text-xs sm:text-sm">
+                            <span className="font-medium truncate pr-2">{investment.projects?.title || 'Project'}</span>
+                            <span className="text-muted-foreground whitespace-nowrap">${investment.investment_amount?.toLocaleString()}</span>
+                          </div>
+                          <Progress value={Math.random() * 100} className="h-2" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
               {/* Quick Actions */}
               <div className="space-y-6">
