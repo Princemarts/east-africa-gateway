@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowRight, UserPlus, Phone, Mail, Building, Globe } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowRight, UserPlus, Phone, Mail, Building, Globe, Lock, LogIn } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import Navigation from "@/components/Navigation";
@@ -19,58 +21,132 @@ const InvestorPortal = () => {
     phone: "",
     sector: "",
     investment_amount: "",
-    notes: ""
+    notes: "",
+    password: "",
+    confirmPassword: ""
   });
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  useEffect(() => {
+    // Check if user is already logged in
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        navigate("/investor-dashboard");
+      }
+    };
+    checkAuth();
+  }, [navigate]);
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        title: "Password Mismatch",
+        description: "Passwords do not match. Please try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // Create auth user
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/investor-dashboard`,
+          data: {
+            name: formData.name
+          }
+        }
+      });
+
+      if (authError) throw authError;
+
+      if (authData.user) {
+        // Create investor profile
+        const { error: profileError } = await supabase
+          .from('investors')
+          .insert([{
+            user_id: authData.user.id,
+            name: formData.name,
+            email: formData.email,
+            company: formData.company,
+            country: formData.country,
+            phone: formData.phone,
+            sector: formData.sector,
+            investment_amount: formData.investment_amount,
+            notes: formData.notes,
+            status: 'New'
+          }]);
+
+        if (profileError) throw profileError;
+
+        toast({
+          title: "Registration Successful!",
+          description: "Welcome! Redirecting to your dashboard...",
+        });
+
+        // Reset form and redirect
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          country: "",
+          phone: "",
+          sector: "",
+          investment_amount: "",
+          notes: "",
+          password: "",
+          confirmPassword: ""
+        });
+
+        // Redirect to investor dashboard
+        setTimeout(() => {
+          navigate("/investor-dashboard");
+        }, 1500);
+      }
+    } catch (error: any) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: "Registration Failed",
+        description: error.message || "Failed to create account. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const { error } = await supabase
-        .from('investors')
-        .insert([{
-          name: formData.name,
-          email: formData.email,
-          company: formData.company,
-          country: formData.country,
-          phone: formData.phone,
-          sector: formData.sector,
-          investment_amount: formData.investment_amount,
-          notes: formData.notes,
-          status: 'New'
-        }]);
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: loginData.email,
+        password: loginData.password,
+      });
 
       if (error) throw error;
 
       toast({
-        title: "Registration Successful!",
-        description: "Please create an account to access your investor dashboard.",
+        title: "Login Successful!",
+        description: "Welcome back to your investor dashboard.",
       });
 
-      // Reset form and redirect to auth page
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        country: "",
-        phone: "",
-        sector: "",
-        investment_amount: "",
-        notes: ""
-      });
-
-      // Redirect to investor auth page after successful registration
-      setTimeout(() => {
-        window.location.href = "/investor-auth";
-      }, 2000);
-    } catch (error) {
-      console.error('Error submitting form:', error);
+      navigate("/investor-dashboard");
+    } catch (error: any) {
       toast({
-        title: "Error",
-        description: "Failed to submit registration. Please try again.",
+        title: "Login Failed",
+        description: error.message || "Failed to sign in. Please check your credentials.",
         variant: "destructive",
       });
     } finally {
@@ -92,11 +168,10 @@ const InvestorPortal = () => {
             <UserPlus className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-navy-primary mb-6">
-            Investor Registration Portal
+            Investor Portal
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Join our exclusive network of international investors and gain access to 
-            premium investment opportunities across East Africa.
+            Join our exclusive network of international investors or access your dashboard
           </p>
         </div>
 
@@ -141,17 +216,24 @@ const InvestorPortal = () => {
               </Card>
             </div>
 
-            {/* Registration Form */}
+            {/* Auth Forms */}
             <div className="lg:col-span-2">
               <Card className="bg-white border-none shadow-elegant">
                 <CardHeader>
-                  <CardTitle className="text-2xl text-navy-primary">Investor Registration</CardTitle>
+                  <CardTitle className="text-2xl text-navy-primary">Get Started</CardTitle>
                   <p className="text-muted-foreground">
-                    Complete the form below to join our investor network
+                    Join our investor network or sign in to your account
                   </p>
                 </CardHeader>
                 <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <Tabs defaultValue="register" className="space-y-6">
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="register">Register</TabsTrigger>
+                      <TabsTrigger value="login">Sign In</TabsTrigger>
+                    </TabsList>
+
+                    <TabsContent value="register">
+                      <form onSubmit={handleRegister} className="space-y-6">
                     {/* Personal Information */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
@@ -263,36 +345,128 @@ const InvestorPortal = () => {
                       </Select>
                     </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="notes">Additional Information</Label>
-                      <Textarea
-                        id="notes"
-                        placeholder="Tell us about your investment goals, timeline, or any specific requirements..."
-                        value={formData.notes}
-                        onChange={(e) => handleInputChange('notes', e.target.value)}
-                        rows={4}
-                      />
-                    </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="notes">Additional Information</Label>
+                          <Textarea
+                            id="notes"
+                            placeholder="Tell us about your investment goals, timeline, or any specific requirements..."
+                            value={formData.notes}
+                            onChange={(e) => handleInputChange('notes', e.target.value)}
+                            rows={4}
+                          />
+                        </div>
 
-                    <Button 
-                      type="submit" 
-                      size="lg" 
-                      className="w-full bg-navy-primary hover:bg-navy-light"
-                      disabled={loading}
-                    >
-                      {loading ? (
-                        <>
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                          Submitting...
-                        </>
-                      ) : (
-                        <>
-                          Register as Investor
-                          <ArrowRight className="w-5 h-5 ml-2" />
-                        </>
-                      )}
-                    </Button>
-                  </form>
+                        {/* Password Fields */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div className="space-y-2">
+                            <Label htmlFor="password">Password *</Label>
+                            <div className="relative">
+                              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                              <Input
+                                id="password"
+                                type="password"
+                                required
+                                placeholder="Create a password"
+                                value={formData.password}
+                                onChange={(e) => handleInputChange('password', e.target.value)}
+                                className="pl-10"
+                              />
+                            </div>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="confirmPassword">Confirm Password *</Label>
+                            <div className="relative">
+                              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                              <Input
+                                id="confirmPassword"
+                                type="password"
+                                required
+                                placeholder="Confirm your password"
+                                value={formData.confirmPassword}
+                                onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                                className="pl-10"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <Button 
+                          type="submit" 
+                          size="lg" 
+                          className="w-full bg-navy-primary hover:bg-navy-light"
+                          disabled={loading}
+                        >
+                          {loading ? (
+                            <>
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                              Creating Account...
+                            </>
+                          ) : (
+                            <>
+                              Create Account & Register
+                              <ArrowRight className="w-5 h-5 ml-2" />
+                            </>
+                          )}
+                        </Button>
+                      </form>
+                    </TabsContent>
+
+                    <TabsContent value="login">
+                      <form onSubmit={handleLogin} className="space-y-6">
+                        <div className="space-y-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="login-email">Email Address</Label>
+                            <div className="relative">
+                              <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                              <Input
+                                id="login-email"
+                                type="email"
+                                required
+                                placeholder="Enter your email"
+                                value={loginData.email}
+                                onChange={(e) => setLoginData(prev => ({ ...prev, email: e.target.value }))}
+                                className="pl-10"
+                              />
+                            </div>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="login-password">Password</Label>
+                            <div className="relative">
+                              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                              <Input
+                                id="login-password"
+                                type="password"
+                                required
+                                placeholder="Enter your password"
+                                value={loginData.password}
+                                onChange={(e) => setLoginData(prev => ({ ...prev, password: e.target.value }))}
+                                className="pl-10"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <Button 
+                          type="submit" 
+                          size="lg" 
+                          className="w-full bg-navy-primary hover:bg-navy-light"
+                          disabled={loading}
+                        >
+                          {loading ? (
+                            <>
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                              Signing In...
+                            </>
+                          ) : (
+                            <>
+                              <LogIn className="w-4 h-4 mr-2" />
+                              Sign In to Dashboard
+                            </>
+                          )}
+                        </Button>
+                      </form>
+                    </TabsContent>
+                  </Tabs>
                 </CardContent>
               </Card>
             </div>
