@@ -14,10 +14,12 @@ export default function WhatsAppButton() {
     <div className="fixed bottom-6 right-6 z-50">
       <Button
         onClick={handleWhatsAppClick}
-        className="bg-green-500 hover:bg-green-600 text-white rounded-full w-14 h-14 shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse hover:animate-none"
-        size="icon"
+        className="bg-green-500 hover:bg-green-600 text-white rounded-2xl px-6 py-3 h-auto shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-3 group"
       >
-        <MessageCircle className="w-6 h-6" />
+        <MessageCircle className="w-5 h-5" />
+        <span className="text-sm font-medium whitespace-nowrap">
+          Chat With Us On WhatsApp
+        </span>
       </Button>
     </div>
   );

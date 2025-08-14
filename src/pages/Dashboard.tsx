@@ -20,13 +20,16 @@ import {
   Eye,
   Edit,
   Trash2,
-  LogOut
+  LogOut,
+  BarChart3
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import ProjectManagementDialog from "@/components/ProjectManagementDialog";
+import AdvancedAnalytics from "@/components/AdvancedAnalytics";
+import ModernTicketSystem from "@/components/ModernTicketSystem";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -319,27 +322,38 @@ const { toast } = useToast();
         </div>
 
         {/* Main Content */}
-        <Tabs defaultValue="investors" className="space-y-6">
-          <TabsList className="bg-white border border-gold-medium/20">
+        <Tabs defaultValue="analytics" className="space-y-6">
+          <TabsList className="bg-white border border-gold-medium/20 grid grid-cols-6 w-full">
+            <TabsTrigger value="analytics" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white flex items-center space-x-2">
+              <BarChart3 className="w-4 h-4" />
+              <span>Analytics</span>
+            </TabsTrigger>
             <TabsTrigger value="investors" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
-              📊 Investors
+              Investors
             </TabsTrigger>
             <TabsTrigger value="projects" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
-              Project Tracker
+              Projects
+            </TabsTrigger>
+            <TabsTrigger value="tickets" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
+              Support
             </TabsTrigger>
             <TabsTrigger value="transactions" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
               Transactions
             </TabsTrigger>
-            <TabsTrigger value="reports" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
-              Reports & Analytics
-            </TabsTrigger>
             <TabsTrigger value="content" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
-              Content Management
-            </TabsTrigger>
-            <TabsTrigger value="messages" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
-              Internal Messages
+              Content
             </TabsTrigger>
           </TabsList>
+
+          {/* Advanced Analytics */}
+          <TabsContent value="analytics">
+            <AdvancedAnalytics />
+          </TabsContent>
+
+          {/* Support Tickets */}
+          <TabsContent value="tickets">
+            <ModernTicketSystem isAdmin={true} />
+          </TabsContent>
 
           {/* Investor Management */}
           <TabsContent value="investors">
