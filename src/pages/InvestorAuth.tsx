@@ -14,19 +14,22 @@ const InvestorAuth = () => {
   const [loading, setLoading] = useState(false);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [signupData, setSignupData] = useState({ email: "", password: "", confirmPassword: "" });
+  const [justRegistered, setJustRegistered] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check if user is already logged in
+    // Check if user is already logged in, but skip redirect if they just registered
     const checkAuth = async () => {
+      if (justRegistered) return; // Don't auto-redirect if user just registered
+      
       const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
+      if (session?.user?.email_confirmed_at) {
         navigate("/investor-dashboard");
       }
     };
     checkAuth();
-  }, [navigate]);
+  }, [navigate, justRegistered]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,7 +76,7 @@ const InvestorAuth = () => {
 
     try {
       // Use the production domain for email confirmation
-      const redirectUrl = "https://qalbyinvestments.com/investor-dashboard";
+      const redirectUrl = "https://qalbyinvestments.com/investor-auth";
       
       const { data, error } = await supabase.auth.signUp({
         email: signupData.email,
@@ -85,13 +88,18 @@ const InvestorAuth = () => {
 
       if (error) throw error;
 
+      // Set flag to prevent auto-redirect after registration
+      setJustRegistered(true);
+
       toast({
-        title: "Registration Successful!",
-        description: "A confirmation link has been sent to your email. Please check your inbox and click the link to verify your account, then return here to sign in.",
+        title: "Check Your Email!",
+        description: "We've sent a confirmation link to your email. Please click the link to verify your account, then return here to sign in.",
+        duration: 8000,
       });
 
-      // Clear form
+      // Clear form and switch to login tab
       setSignupData({ email: "", password: "", confirmPassword: "" });
+      
     } catch (error: any) {
       toast({
         title: "Registration Failed",
