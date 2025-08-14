@@ -337,30 +337,30 @@ const InvestorDashboard = () => {
     <div className="min-h-screen bg-gradient-subtle">
       <Navigation />
       
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 max-w-7xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 max-w-7xl">
         {/* Modern Header */}
-      <header className="bg-navy-primary border-b border-gold-medium/20 px-6 py-6">
+      <header className="bg-navy-primary border-b border-gold-medium/20 px-4 sm:px-6 py-4 sm:py-6 rounded-lg mb-6">
         <div className="container mx-auto">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center space-x-4">
-              <Avatar className="w-16 h-16 border-2 border-gold-medium">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 sm:mb-6">
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <Avatar className="w-12 h-12 sm:w-16 sm:h-16 border-2 border-gold-medium">
                 <AvatarImage src={investorProfile.profile_picture} />
-                <AvatarFallback className="bg-gradient-gold text-navy-deep font-bold text-xl">
+                <AvatarFallback className="bg-gradient-gold text-navy-deep font-bold text-lg sm:text-xl">
                   {investorProfile.name?.charAt(0) || 'I'}
                 </AvatarFallback>
               </Avatar>
               <div>
-                <h1 className="text-2xl font-bold text-white">Welcome back, {investorProfile.name}</h1>
-                <p className="text-gold-light">Investor Dashboard • {new Date().toLocaleDateString()}</p>
+                <h1 className="text-lg sm:text-2xl font-bold text-white">Welcome back, {investorProfile.name}</h1>
+                <p className="text-gold-light text-sm sm:text-base">Investor Dashboard • {new Date().toLocaleDateString()}</p>
               </div>
             </div>
             <Button 
               variant="outline" 
               size="sm" 
               onClick={handleLogout}
-              className="border-red-400/30 text-red-400 hover:bg-red-400 hover:text-white"
+              className="border-red-400/30 text-red-400 hover:bg-red-400 hover:text-white text-xs sm:text-sm"
             >
-              <LogOut className="w-4 h-4 mr-2" />
+              <LogOut className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
               Logout
             </Button>
           </div>
@@ -407,7 +407,7 @@ const InvestorDashboard = () => {
         </div>
       </header>
 
-      <div className="container mx-auto px-6 py-8">
+      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
       {/* Main Content Tabs */}
       <Tabs defaultValue="overview" className="space-y-6">
         <div className="w-full overflow-x-auto">

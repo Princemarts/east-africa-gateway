@@ -72,7 +72,8 @@ const InvestorAuth = () => {
     setLoading(true);
 
     try {
-      const redirectUrl = `${window.location.origin}/investor-dashboard`;
+      // Use the production domain for email confirmation
+      const redirectUrl = "https://qalbyinvestments.com/investor-dashboard";
       
       const { data, error } = await supabase.auth.signUp({
         email: signupData.email,
@@ -86,7 +87,7 @@ const InvestorAuth = () => {
 
       toast({
         title: "Registration Successful!",
-        description: "Please check your email to confirm your account, then you can log in.",
+        description: "A confirmation link has been sent to your email. Please check your inbox and click the link to verify your account, then return here to sign in.",
       });
 
       // Clear form
