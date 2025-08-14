@@ -74,24 +74,13 @@ export default function Navigation() {
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center space-x-4">
             {user ? (
-              <>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => window.location.href = '/investor-dashboard'}
-                >
-                  Dashboard
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={handleLogout}
-                  className="border-red-400/30 text-red-600 hover:bg-red-50"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Logout
-                </Button>
-              </>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => window.location.href = '/investor-dashboard'}
+              >
+                Dashboard
+              </Button>
             ) : (
               <>
                 <Button 
@@ -140,25 +129,14 @@ export default function Navigation() {
               ))}
               <div className="flex flex-col space-y-3 pt-4 border-t border-gray-200">
                 {user ? (
-                  <>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="w-full"
-                      onClick={() => window.location.href = '/investor-dashboard'}
-                    >
-                      Dashboard
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="w-full border-red-400/30 text-red-600 hover:bg-red-50"
-                      onClick={handleLogout}
-                    >
-                      <LogOut className="w-4 h-4 mr-2" />
-                      Logout
-                    </Button>
-                  </>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full"
+                    onClick={() => window.location.href = '/investor-dashboard'}
+                  >
+                    Dashboard
+                  </Button>
                 ) : (
                   <>
                     <Button 
