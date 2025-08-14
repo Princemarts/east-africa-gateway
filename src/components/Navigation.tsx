@@ -1,10 +1,39 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, LogOut } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user ?? null);
+    };
+    
+    getSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user ?? null);
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    toast({
+      title: "Logged out",
+      description: "You have been logged out successfully",
+    });
+  };
 
   const navigation = [
     { name: "Home", href: "/" },
@@ -44,20 +73,43 @@ export default function Navigation() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => window.location.href = '/investor-portal'}
-            >
-              Investor Portal
-            </Button>
-            <Button 
-              variant="professional" 
-              size="sm"
-              onClick={() => window.location.href = '/investor-portal'}
-            >
-              Get Started
-            </Button>
+            {user ? (
+              <>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => window.location.href = '/investor-dashboard'}
+                >
+                  Dashboard
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={handleLogout}
+                  className="border-red-400/30 text-red-600 hover:bg-red-50"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => window.location.href = '/investor-portal'}
+                >
+                  Investor Portal
+                </Button>
+                <Button 
+                  variant="professional" 
+                  size="sm"
+                  onClick={() => window.location.href = '/investor-portal'}
+                >
+                  Get Started
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -87,22 +139,46 @@ export default function Navigation() {
                 </a>
               ))}
               <div className="flex flex-col space-y-3 pt-4 border-t border-gray-200">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full"
-                  onClick={() => window.location.href = '/investor-portal'}
-                >
-                  Investor Portal
-                </Button>
-                <Button 
-                  variant="professional" 
-                  size="sm" 
-                  className="w-full"
-                  onClick={() => window.location.href = '/investor-portal'}
-                >
-                  Get Started
-                </Button>
+                {user ? (
+                  <>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full"
+                      onClick={() => window.location.href = '/investor-dashboard'}
+                    >
+                      Dashboard
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full border-red-400/30 text-red-600 hover:bg-red-50"
+                      onClick={handleLogout}
+                    >
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Logout
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full"
+                      onClick={() => window.location.href = '/investor-portal'}
+                    >
+                      Investor Portal
+                    </Button>
+                    <Button 
+                      variant="professional" 
+                      size="sm" 
+                      className="w-full"
+                      onClick={() => window.location.href = '/investor-portal'}
+                    >
+                      Get Started
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>

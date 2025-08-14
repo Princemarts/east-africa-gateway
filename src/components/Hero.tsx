@@ -111,27 +111,6 @@ export default function Hero() {
             >
               Book Consultation
             </Button>
-            {user ? (
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="w-full sm:w-auto min-w-[200px] border-red-400/30 text-red-400 hover:bg-red-400 hover:text-white"
-                onClick={handleLogout}
-              >
-                <LogOut className="w-5 h-5 mr-2" />
-                Logout
-              </Button>
-            ) : (
-              <Button 
-                variant="consultation" 
-                size="lg" 
-                className="w-full sm:w-auto min-w-[200px]"
-                onClick={handleGetStarted}
-              >
-                Get Started
-                <ArrowRight className="w-5 h-5" />
-              </Button>
-            )}
           </div>
           
           {/* Stats */}
