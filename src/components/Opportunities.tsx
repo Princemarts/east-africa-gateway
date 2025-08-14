@@ -12,49 +12,54 @@ import {
   ArrowRight,
   Users
 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  sector: string;
+  location: string;
+  investment_size: string;
+  expected_returns: string;
+  timeline: string;
+  status: string;
+  incentives: string[];
+}
 
 export default function Opportunities() {
-  const opportunities = [
-    {
-      id: 1,
-      title: "Organic Coffee Processing Plant",
-      sector: "Agro-processing",
-      icon: Wheat,
-      location: "Kampala, Uganda",
-      investment: "$1.5M - $3M",
-      returns: "18-22% IRR",
-      status: "Open",
-      description: "Establish a state-of-the-art organic coffee processing facility to serve growing international demand.",
-      incentives: ["10-year tax holiday", "Duty-free equipment import", "Land lease facilitation"],
-      timeline: "Q2 2024"
-    },
-    {
-      id: 2,
-      title: "Medical Equipment Manufacturing",
-      sector: "Healthcare",
-      icon: Stethoscope,
-      location: "Nairobi, Kenya",
-      investment: "$2M - $5M",
-      returns: "20-25% IRR",
-      status: "Under Review",
-      description: "Manufacturing facility for medical devices and equipment serving East African healthcare market.",
-      incentives: ["Manufacturing bond benefits", "Export promotion incentives", "Special economic zone access"],
-      timeline: "Q3 2024"
-    },
-    {
-      id: 3,
-      title: "Cold Chain Logistics Network",
-      sector: "Transport",
-      icon: Truck,
-      location: "Dar es Salaam, Tanzania",
-      investment: "$3M - $7M",
-      returns: "15-20% IRR",
-      status: "Open",
-      description: "Develop modern cold chain infrastructure to support agricultural export markets.",
-      incentives: ["Infrastructure development grants", "Accelerated depreciation", "Port access privileges"],
-      timeline: "Q4 2024"
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .limit(3);
+
+      if (error) throw error;
+      setProjects(data || []);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
+
+  const getSectorIcon = (sector: string) => {
+    switch (sector?.toLowerCase()) {
+      case 'agro-processing': return Wheat;
+      case 'healthcare': return Stethoscope;
+      case 'transport': return Truck;
+      default: return Wheat;
+    }
+  };
 
   const getSectorColor = (sector: string) => {
     switch (sector) {
@@ -101,78 +106,99 @@ export default function Opportunities() {
 
         {/* Opportunities Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-16">
-          {opportunities.map((opportunity) => (
-            <Card key={opportunity.id} className="group hover:shadow-elegant transition-all duration-300 bg-white border-none">
-              <CardHeader>
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <opportunity.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <Badge className={getSectorColor(opportunity.sector)}>
-                      {opportunity.sector}
-                    </Badge>
-                    <Badge className={getStatusColor(opportunity.status)}>
-                      {opportunity.status}
-                    </Badge>
-                  </div>
-                </div>
-                <CardTitle className="text-xl text-navy-primary group-hover:text-primary transition-colors">
-                  {opportunity.title}
-                </CardTitle>
-                <CardDescription>
-                  {opportunity.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Key Details */}
-                <div className="grid grid-cols-1 gap-3">
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <MapPin className="w-4 h-4 mr-2 text-gold-medium" />
-                    {opportunity.location}
-                  </div>
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <DollarSign className="w-4 h-4 mr-2 text-gold-medium" />
-                    Investment: {opportunity.investment}
-                  </div>
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <TrendingUp className="w-4 h-4 mr-2 text-gold-medium" />
-                    Expected Returns: {opportunity.returns}
-                  </div>
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <Clock className="w-4 h-4 mr-2 text-gold-medium" />
-                    Timeline: {opportunity.timeline}
-                  </div>
-                </div>
+          {loading ? (
+            <div className="col-span-full text-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-navy-primary mx-auto"></div>
+              <p className="text-muted-foreground mt-4">Loading opportunities...</p>
+            </div>
+          ) : projects.length === 0 ? (
+            <div className="col-span-full text-center py-12">
+              <p className="text-muted-foreground">No opportunities available at the moment.</p>
+            </div>
+          ) : (
+            projects.map((project) => {
+              const IconComponent = getSectorIcon(project.sector);
+              return (
+                <Card key={project.id} className="group hover:shadow-elegant transition-all duration-300 bg-white border-none">
+                  <CardHeader>
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <IconComponent className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <Badge className={getSectorColor(project.sector)}>
+                          {project.sector}
+                        </Badge>
+                        <Badge className={getStatusColor(project.status)}>
+                          {project.status}
+                        </Badge>
+                      </div>
+                    </div>
+                    <CardTitle className="text-xl text-navy-primary group-hover:text-primary transition-colors">
+                      {project.title}
+                    </CardTitle>
+                    <CardDescription>
+                      {project.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {/* Key Details */}
+                    <div className="grid grid-cols-1 gap-3">
+                      <div className="flex items-center text-sm text-muted-foreground">
+                        <MapPin className="w-4 h-4 mr-2 text-gold-medium" />
+                        {project.location}
+                      </div>
+                      <div className="flex items-center text-sm text-muted-foreground">
+                        <DollarSign className="w-4 h-4 mr-2 text-gold-medium" />
+                        Investment: {project.investment_size}
+                      </div>
+                      <div className="flex items-center text-sm text-muted-foreground">
+                        <TrendingUp className="w-4 h-4 mr-2 text-gold-medium" />
+                        Expected Returns: {project.expected_returns}
+                      </div>
+                      <div className="flex items-center text-sm text-muted-foreground">
+                        <Clock className="w-4 h-4 mr-2 text-gold-medium" />
+                        Timeline: {project.timeline}
+                      </div>
+                    </div>
 
-                {/* Incentives */}
-                <div>
-                  <h4 className="font-semibold text-navy-primary mb-2">Key Incentives:</h4>
-                  <ul className="space-y-1">
-                    {opportunity.incentives.map((incentive, index) => (
-                      <li key={index} className="flex items-center text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-gold-medium rounded-full mr-3"></div>
-                        {incentive}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                    {/* Incentives */}
+                    {project.incentives && project.incentives.length > 0 && (
+                      <div>
+                        <h4 className="font-semibold text-navy-primary mb-2">Key Incentives:</h4>
+                        <ul className="space-y-1">
+                          {project.incentives.slice(0, 2).map((incentive, index) => (
+                            <li key={index} className="flex items-center text-sm text-muted-foreground">
+                              <div className="w-1.5 h-1.5 bg-gold-medium rounded-full mr-3"></div>
+                              {incentive}
+                            </li>
+                          ))}
+                          {project.incentives.length > 2 && (
+                            <li className="text-sm text-gold-medium">
+                              +{project.incentives.length - 2} more incentives
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    )}
 
-                {/* CTA */}
-                <div className="pt-4 border-t border-gray-100">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-                    onClick={() => window.location.href = `/project/${opportunity.id}`}
-                  >
-                    View Details
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                    {/* CTA */}
+                    <div className="pt-4 border-t border-gray-100">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                        onClick={() => window.location.href = `/project/${project.id}`}
+                      >
+                        View Details
+                        <ArrowRight className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })
+          )}
         </div>
 
         {/* Sector Overview */}
