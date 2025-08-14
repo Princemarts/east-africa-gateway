@@ -322,7 +322,7 @@ const { toast } = useToast();
         <Tabs defaultValue="investors" className="space-y-6">
           <TabsList className="bg-white border border-gold-medium/20">
             <TabsTrigger value="investors" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
-              Investor Management
+              📊 Investors
             </TabsTrigger>
             <TabsTrigger value="projects" className="data-[state=active]:bg-navy-primary data-[state=active]:text-white">
               Project Tracker
@@ -350,7 +350,10 @@ const { toast } = useToast();
                     <CardTitle className="text-navy-primary">Investor Management</CardTitle>
                     <CardDescription>Manage investor profiles and track engagement</CardDescription>
                   </div>
-                  <Button className="bg-navy-primary hover:bg-navy-light">
+                  <Button 
+                    className="bg-navy-primary hover:bg-navy-light"
+                    onClick={() => navigate('/investor-portal')}
+                  >
                     <Plus className="w-4 h-4 mr-2" />
                     Add Investor
                   </Button>
