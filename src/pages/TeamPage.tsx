@@ -33,6 +33,18 @@ export default function TeamPage() {
     },
     {
       id: 3,
+      name: "Attorney Fatih Lubega",
+      role: "Legal Advisor",
+      image: "/lovable-uploads/3fa3b421-8da1-4871-8fee-a84fdabbbb31.png",
+      bio: "Accomplished legal professional with specialized expertise in investment law, corporate governance, and regulatory compliance across East African jurisdictions. Fatih ensures all investment structures and partnerships comply with local and international legal frameworks.",
+      experience: "10+ years",
+      education: "Bachelor of Laws (LLB), Diploma in Legal Practice",
+      expertise: ["Investment Law", "Corporate Governance", "Regulatory Compliance", "Contract Negotiations"],
+      email: "fatih@qalbyinvestments.com",
+      phone: "+256 700 123456"
+    },
+    {
+      id: 4,
       name: "Tuhame Mathias",
       role: "Marketing Manager",
       image: "/lovable-uploads/a2410ac5-a694-4083-9e66-b1973ce24cc2.png",
